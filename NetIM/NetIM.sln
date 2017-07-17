@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetIM.IMServer", "NetIM.IMServer\NetIM.IMServer.csproj", "{0FC9ACCB-8E30-4257-9560-5863257E5C77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserCenter.OpenAPI", "UserCenter.OpenAPI\UserCenter.OpenAPI.csproj", "{0DC8C263-4D35-4F8B-82AB-DAEFDAA8CFA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserCenter", "UserCenter", "{6E9FE22E-750A-4053-B054-0D581730EF89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserCenter.IServices", "UserCenter.IServices\UserCenter.IServices.csproj", "{F80E8237-61EB-4A36-AD5A-373035AABD59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserCenter.Services", "UserCenter.Services\UserCenter.Services.csproj", "{3F9D4FA1-5854-4076-8FCB-6FC9D4E2E159}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserCenter.DTO", "UserCenter.DTO\UserCenter.DTO.csproj", "{4CAED30E-7445-4209-BC74-7006C9F48387}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FC9ACCB-8E30-4257-9560-5863257E5C77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FC9ACCB-8E30-4257-9560-5863257E5C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FC9ACCB-8E30-4257-9560-5863257E5C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FC9ACCB-8E30-4257-9560-5863257E5C77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DC8C263-4D35-4F8B-82AB-DAEFDAA8CFA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DC8C263-4D35-4F8B-82AB-DAEFDAA8CFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DC8C263-4D35-4F8B-82AB-DAEFDAA8CFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DC8C263-4D35-4F8B-82AB-DAEFDAA8CFA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F80E8237-61EB-4A36-AD5A-373035AABD59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F80E8237-61EB-4A36-AD5A-373035AABD59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F80E8237-61EB-4A36-AD5A-373035AABD59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F80E8237-61EB-4A36-AD5A-373035AABD59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F9D4FA1-5854-4076-8FCB-6FC9D4E2E159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F9D4FA1-5854-4076-8FCB-6FC9D4E2E159}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F9D4FA1-5854-4076-8FCB-6FC9D4E2E159}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F9D4FA1-5854-4076-8FCB-6FC9D4E2E159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CAED30E-7445-4209-BC74-7006C9F48387}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CAED30E-7445-4209-BC74-7006C9F48387}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CAED30E-7445-4209-BC74-7006C9F48387}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CAED30E-7445-4209-BC74-7006C9F48387}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0DC8C263-4D35-4F8B-82AB-DAEFDAA8CFA8} = {6E9FE22E-750A-4053-B054-0D581730EF89}
+		{F80E8237-61EB-4A36-AD5A-373035AABD59} = {6E9FE22E-750A-4053-B054-0D581730EF89}
+		{3F9D4FA1-5854-4076-8FCB-6FC9D4E2E159} = {6E9FE22E-750A-4053-B054-0D581730EF89}
+		{4CAED30E-7445-4209-BC74-7006C9F48387} = {6E9FE22E-750A-4053-B054-0D581730EF89}
+	EndGlobalSection
+EndGlobal
