@@ -9,10 +9,10 @@ namespace UserCenter.IServices
 {
     public interface IUserService: IServiceTag
     {
-        long AddNew(string phoneNum, string nickName, string password);
-        bool UserExists(string phoneNum);
-        bool CheckLogin(string phoneNum, string password);
-        UserDTO GetById(long id);
-        UserDTO GetByPhoneNum(string phoneNum);
+        Task<long> AddNewAsync(string phoneNum, string nickName, string password);
+        Task<bool> UserExistsAsync(string phoneNum);
+        Task<bool> CheckLoginAsync(string phoneNum, string password);
+        Task<UserDTO> GetByIdAsync(long id);
+        Task<UserDTO> GetByPhoneNumAsync(string phoneNum);
     }
 }

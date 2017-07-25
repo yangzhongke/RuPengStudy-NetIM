@@ -13,6 +13,7 @@ namespace UserCenter.Services.Configs
         public UserGroupConfig()
         {
             ToTable("T_UserGroups");
+            this.Property(e => e.Name).HasMaxLength(50).IsRequired();
         }
     }
 }

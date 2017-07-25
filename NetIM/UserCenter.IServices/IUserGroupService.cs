@@ -9,11 +9,11 @@ namespace UserCenter.IServices
 {
     public interface IUserGroupService : IServiceTag
     {
-        UserGroupDTO GetById(long id);
-        UserGroupDTO[] GetAll();
-        UserDTO[] GetGroupUsers(long userGroupId);
+        Task<UserGroupDTO> GetByIdAsync(long id);
+        Task<UserGroupDTO[]> GetAllAsync();
+        Task<UserDTO[]> GetGroupUsersAsync(long userGroupId);
 
-        void AddUserToGroup(long userGroupId, long userId);
-        void RemoveUserFromGroup(long userGroupId, long userId);
+        Task AddUserToGroupAsync(long userGroupId, long userId);
+        Task RemoveUserFromGroupAsync(long userGroupId, long userId);
     }
 }

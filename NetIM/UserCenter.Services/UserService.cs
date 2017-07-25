@@ -7,15 +7,21 @@ using System.Threading.Tasks;
 using UserCenter.DTO;
 using UserCenter.IServices;
 using UserCenter.Services.Models;
+using System.Data.Entity;
 
 namespace UserCenter.Services
 {
     public class UserService : IUserService
     {
-        public long AddNew(string phoneNum, string nickName, string password)
+        public async Task<long> AddNewAsync(string phoneNum, string nickName, string password)
         {
             using (UCDbContext ctx = new UCDbContext())
             {
+                if(await ctx.Users.AnyAsync(u => u.PhoneNum == phoneNum))
+                {
+                    throw new ApplicationException("手机号"+phoneNum+"已经存在");
+                }
+
                 User user = new User();
                 user.NickName = nickName;
                 user.PhoneNum = phoneNum;
@@ -25,16 +31,16 @@ namespace UserCenter.Services
                 user.PasswordSalt = salt;
 
                 ctx.Users.Add(user);
-                ctx.SaveChanges();
+                await ctx.SaveChangesAsync();
                 return user.Id;
             }
         }
 
-        public bool CheckLogin(string phoneNum, string password)
+        public async Task<bool> CheckLoginAsync(string phoneNum, string password)
         {
             using (UCDbContext ctx = new UCDbContext())
             {
-                var user = ctx.Users.SingleOrDefault(e => e.PhoneNum == phoneNum);
+                var user = await ctx.Users.SingleOrDefaultAsync(e => e.PhoneNum == phoneNum);
                 if(user==null)
                 {
                     return false;
@@ -54,11 +60,11 @@ namespace UserCenter.Services
         }
 
 
-        public UserDTO GetById(long id)
+        public async Task<UserDTO> GetByIdAsync(long id)
         {
             using (UCDbContext ctx = new UCDbContext())
             {
-                var user = ctx.Users.SingleOrDefault(e => e.Id == id);
+                var user = await ctx.Users.SingleOrDefaultAsync(e => e.Id == id);
                 if(user==null)
                 {
                     return null;
@@ -70,11 +76,11 @@ namespace UserCenter.Services
             }
         }
 
-        public UserDTO GetByPhoneNum(string phoneNum)
+        public async Task<UserDTO> GetByPhoneNumAsync(string phoneNum)
         {
             using (UCDbContext ctx = new UCDbContext())
             {
-                var user = ctx.Users.SingleOrDefault(e => e.PhoneNum==phoneNum);
+                var user = await ctx.Users.SingleOrDefaultAsync(e => e.PhoneNum==phoneNum);
                 if (user == null)
                 {
                     return null;
@@ -86,11 +92,11 @@ namespace UserCenter.Services
             }
         }
 
-        public bool UserExists(string phoneNum)
+        public async Task<bool> UserExistsAsync(string phoneNum)
         {
             using (UCDbContext ctx = new UCDbContext())
             {
-                return ctx.Users.Any(e=>e.PhoneNum==phoneNum);
+                return await ctx.Users.AnyAsync(e=>e.PhoneNum==phoneNum);
             }
         }
     }

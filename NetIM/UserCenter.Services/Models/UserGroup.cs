@@ -9,6 +9,6 @@ namespace UserCenter.Services.Models
     public class UserGroup:BaseModel
     {
         public string Name { get; set; }
-        public ICollection<User> Users { get; set; } = new List<User>();
+        public virtual ICollection<User> Users { get; set; } = new List<User>();
     }
 }

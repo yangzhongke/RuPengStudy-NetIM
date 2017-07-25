@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using UserCenter.DTO;
 using UserCenter.IServices;
@@ -13,27 +14,35 @@ namespace UserCenter.OpenAPI.Controllers
     {
         public IUserGroupService GroupService { get; set; }
 
-        public UserGroupDTO GetById(long id)
+        [HttpGet]
+        public async Task<UserGroupDTO> GetById(long id)
         {
-            return GroupService.GetById(id);
-        }
-        public UserGroupDTO[] GetAll()
-        {
-            return GroupService.GetAll();
+            return await GroupService.GetByIdAsync(id);
         }
 
-        public UserDTO[] GetGroupUsers(long userGroupId)
+        [HttpGet]
+        public async Task<UserGroupDTO[]> GetAll()
         {
-            return GroupService.GetGroupUsers(userGroupId);
+            return await GroupService.GetAllAsync();
         }
 
-        public void AddUserToGroup(long userGroupId, long userId)
+        [HttpGet]
+        public async Task<UserDTO[]> GetGroupUsers(long userGroupId)
         {
-            GroupService.AddUserToGroup(userGroupId, userId);
+            return await GroupService.GetGroupUsersAsync(userGroupId);
         }
-        public void RemoveUserFromGroup(long userGroupId, long userId)
+
+        [HttpGet]
+
+        public async Task AddUserToGroup(long userGroupId, long userId)
         {
-            GroupService.RemoveUserFromGroup(userGroupId, userId);
+            await GroupService.AddUserToGroupAsync(userGroupId, userId);
+        }
+
+        [HttpGet]
+        public async Task RemoveUserFromGroup(long userGroupId, long userId)
+        {
+            await GroupService.RemoveUserFromGroupAsync(userGroupId, userId);
         }
     }
 }

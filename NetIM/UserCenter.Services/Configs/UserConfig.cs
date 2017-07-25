@@ -14,7 +14,11 @@ namespace UserCenter.Services.Configs
         {
             ToTable("T_Users");
             this.HasMany(e => e.Groups).WithMany(e=>e.Users)
-                .Map(e=>e.ToTable("T_GroupUsers").MapLeftKey("UserId").MapRightKey("GrouId"));
+                .Map(e=>e.ToTable("T_GroupUsers").MapLeftKey("UserId").MapRightKey("GroupId"));
+            this.Property(e => e.NickName).HasMaxLength(20).IsRequired();
+            this.Property(e => e.PasswordHash).HasMaxLength(100).IsRequired();
+            this.Property(e => e.PasswordSalt).HasMaxLength(20).IsRequired();
+            this.Property(e => e.PhoneNum).HasMaxLength(50).IsRequired();
         }
     }
 }

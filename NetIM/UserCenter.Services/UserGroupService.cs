@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UserCenter.DTO;
 using UserCenter.IServices;
 using UserCenter.Services.Models;
+using System.Data.Entity;
 
 namespace UserCenter.Services
 {
@@ -20,11 +21,11 @@ namespace UserCenter.Services
             return dto;
         }
 
-        public UserGroupDTO[] GetAll()
+        public async Task<UserGroupDTO[]> GetAllAsync()
         {
             using (UCDbContext ctx = new UCDbContext())
             {
-                var groups = ctx.UserGroups;
+                var groups = await ctx.UserGroups.ToArrayAsync();
                 List<UserGroupDTO> dtos = new List<UserGroupDTO>();
                 foreach(var group in groups)
                 {
@@ -34,11 +35,11 @@ namespace UserCenter.Services
             }
         }
 
-        public UserGroupDTO GetById(long id)
+        public async Task<UserGroupDTO> GetByIdAsync(long id)
         {
             using (UCDbContext ctx = new UCDbContext())
             {
-                var group = ctx.UserGroups.SingleOrDefault(e=>e.Id==id);
+                var group = await ctx.UserGroups.SingleOrDefaultAsync(e=>e.Id==id);
                 if(group==null)
                 {
                     return null;
@@ -47,11 +48,11 @@ namespace UserCenter.Services
             }
         }
 
-        public UserDTO[] GetGroupUsers(long userGroupId)
+        public async Task<UserDTO[]> GetGroupUsersAsync(long userGroupId)
         {
             using (UCDbContext ctx = new UCDbContext())
             {
-                var group = ctx.UserGroups.SingleOrDefault(e => e.Id == userGroupId);
+                var group = await ctx.UserGroups.SingleOrDefaultAsync(e => e.Id == userGroupId);
                 if (group == null)
                 {
                     return null;
@@ -69,11 +70,11 @@ namespace UserCenter.Services
             }
         }
 
-        public void AddUserToGroup(long userGroupId, long userId)
+        public async Task AddUserToGroupAsync(long userGroupId, long userId)
         {
             using (UCDbContext ctx = new UCDbContext())
             {
-                var group = ctx.UserGroups.SingleOrDefault(e => e.Id == userGroupId);
+                var group = await ctx.UserGroups.SingleOrDefaultAsync(e => e.Id == userGroupId);
                 if (group == null)
                 {
                     throw new ArgumentException("userGroupId=" + userGroupId + "不存在", nameof(userGroupId));
@@ -85,27 +86,27 @@ namespace UserCenter.Services
                 }
                 group.Users.Add(user);
                 user.Groups.Add(group);
-                ctx.SaveChanges();
+                await ctx.SaveChangesAsync();
             }
         }
 
-        public void RemoveUserFromGroup(long userGroupId, long userId)
+        public async Task RemoveUserFromGroupAsync(long userGroupId, long userId)
         {
             using (UCDbContext ctx = new UCDbContext())
             {
-                var group = ctx.UserGroups.SingleOrDefault(e => e.Id == userGroupId);
+                var group = await ctx.UserGroups.SingleOrDefaultAsync(e => e.Id == userGroupId);
                 if (group == null)
                 {
                     throw new ArgumentException("userGroupId=" + userGroupId + "不存在", nameof(userGroupId));
                 }
-                var user = ctx.Users.SingleOrDefault(e => e.Id == userId);
+                var user = await ctx.Users.SingleOrDefaultAsync(e => e.Id == userId);
                 if (user == null)
                 {
                     throw new ArgumentException("userId=" + userId + "不存在", nameof(userId));
                 }
                 group.Users.Remove(user);
                 user.Groups.Remove(group);
-                ctx.SaveChanges();
+                await ctx.SaveChangesAsync();
             }
         }
     }
