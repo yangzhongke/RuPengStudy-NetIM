@@ -24,5 +24,6 @@ namespace UserCenter.Services
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<AppInfo> AppInfos { get; set; }
     }
 }

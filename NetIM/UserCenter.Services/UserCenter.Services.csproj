@@ -53,8 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppInfoService.cs" />
+    <Compile Include="Configs\AppInfoConfig.cs" />
     <Compile Include="Configs\UserConfig.cs" />
     <Compile Include="Configs\UserGroupConfig.cs" />
+    <Compile Include="Models\AppInfo.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserGroup.cs" />

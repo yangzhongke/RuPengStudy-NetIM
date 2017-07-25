@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Filters;
 using System.Web.Mvc;
 using System.Web.Routing;
 using UserCenter.IServices;
@@ -42,6 +43,7 @@ namespace UserCenter.OpenAPI
             builder.RegisterAssemblyTypes(services)
                 .Where(type => !type.IsAbstract && typeof(IServiceTag).IsAssignableFrom(type))
                 .AsImplementedInterfaces().SingleInstance();
+
             var container = builder.Build();
             // Set the WebApi dependency resolver.  
             var resolver = new AutofacWebApiDependencyResolver(container);
