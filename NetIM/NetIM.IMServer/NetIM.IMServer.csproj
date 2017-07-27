@@ -117,14 +117,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="1.html" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
+    <Content Include="Scripts\tabulous\tabulous.css" />
+    <Content Include="Scripts\tabulous\tabulous.js" />
     <Content Include="Web.config" />
-    <Content Include="Views\IM\Index.cshtml" />
+    <Content Include="Views\IM\Login.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -134,12 +137,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="JsonNetActionFilter.cs" />
+    <Compile Include="JsonNetResult.cs" />
+    <Compile Include="Models\IndexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="UserCenterAPIFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
+    <Content Include="Views\IM\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -149,7 +157,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UserCenter.NetSDK\UserCenter.NetSDK.csproj">
+      <Project>{b6fa74ed-df8b-4a37-8506-d2cfd763b29c}</Project>
+      <Name>UserCenter.NetSDK</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
