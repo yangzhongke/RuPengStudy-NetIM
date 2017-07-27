@@ -1,34 +1,67 @@
-﻿@model IndexModel
+﻿@model string
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Demo";
+    ViewBag.Title = Model+"-聊天";
 }
 
-<div class="tabs" id="tab1">
-    <ul>
-        @foreach (var group in Model.Groups)
-        {
-            <li><a href="#tabs-@(group.Id)" title="">@group.Name</a></li>
-        }
-    </ul>
-
-    <div id="tabs_container">
-        @foreach (var group in Model.Groups)
-        {
-             <div id="tabs-@(group.Id)">
-                 xxxx
-             </div>
-        }
-    </div>
-</div>
+<ul id="listGroups">
+    <li  v-for="group in getOrderedGroups" >{{group.name}}</li>
+</ul>
 
 @section scripts {
 <script src="~/Scripts/jquery-1.6.4.min.js"></script>
-<script src="~/Scripts/tabulous/tabulous.js"></script>
-<link href="~/Scripts/tabulous/tabulous.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        $('#tab1').tabulous();
+
+        var vm = new Vue({
+            el: '#listGroups',
+            data: {
+                groups: [],
+                searchName: ""
+            },
+            methods:
+            {
+                groupClick: function (group) {
+                    openGroupChat(group.id, group.name);
+                }
+            },
+            computed:
+            {
+                getOrderedGroups() {
+                    //根据未读消息数量排序，这样有未读消息的显示到顶部
+                    //filter则是在用户输入搜索条件的时候根据班级的名字搜索
+                    var searchName = this.searchName;
+                    return this.groups.sort((g1, g2) => { return g2.unreadCount - g1.unreadCount; }).filter(function (item) {
+                        if (searchName) {
+                            return item.name.indexOf(searchName) >= 0;
+                        }
+                        else {
+                            return true;
+                        }
+                    });
+                }
+            }
+        });
+
+
+        $.ajax({
+            type: "post", dataType: "json", url: "/IM/LoadGroups",
+            success: function (res)
+            {
+                var groups = [];
+                for (var i = 0; i < res.length; i++)
+                {
+                    var item = res[i];
+                    groups.push({ name: item, unreadCount:3 });
+                }
+                vm.groups = groups;
+            },
+            error: function ()
+            {
+                alert("加载班级列表失败");
+            }
+        });
     });
 </script>
 }

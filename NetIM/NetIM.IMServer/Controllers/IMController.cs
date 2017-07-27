@@ -1,5 +1,4 @@
-﻿using NetIM.IMServer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,15 +36,17 @@ namespace NetIM.IMServer.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            long userId = (long)Session["UserId"];
             string userNickName = (string)Session["UserNickName"];
+            return View((object)userNickName);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> LoadGroups()
+        {
+            long userId = (long)Session["UserId"];
             var api = UserCenterAPIFactory.Create();
             var groups = await api.userGroup.GetGroupsAsync(userId);
-            IndexModel model = new IndexModel();
-            model.Groups = groups;
-            model.UserNickName = userNickName;
-
-            return View(model);
+            return Json(groups);
         }
     }
 }
