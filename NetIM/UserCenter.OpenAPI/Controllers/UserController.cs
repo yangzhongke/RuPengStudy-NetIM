@@ -33,8 +33,6 @@ namespace UserCenter.OpenAPI.Controllers
             return await UserService.CheckLoginAsync(phoneNum, password);
         }
 
-        //关于各大平台API为什么不使用restful的风格 http://bbs.csdn.net/topics/390944890
-        //使用PostMan调试webapi  https://www.getpostman.com/
         [HttpGet]
         public async Task<UserDTO> GetById(long id)
         {

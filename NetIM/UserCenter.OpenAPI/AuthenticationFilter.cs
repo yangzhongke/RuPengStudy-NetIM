@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RuPeng.Common;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -25,24 +26,29 @@ namespace UserCenter.OpenAPI
             CancellationToken cancellationToken, Func<Task<HttpResponseMessage>> continuation)
         {
             //由于AuthenticationFilter是在WebApiConfig中直接new的，所以属性不会自动注入
-
             IAppInfoService appInfoService = (IAppInfoService)GlobalConfiguration.Configuration
                 .DependencyResolver.GetService(typeof(IAppInfoService));
 
             var headers = actionContext.Request.Headers;
-            string authValue = Encoding.Default.GetString(Convert.FromBase64String(headers.Authorization.Parameter));
-            string[] authValues = authValue.Split(':');
-            string appKey = authValues[0];
-            string appSecret = authValues[1];
-            if (string.IsNullOrEmpty(appKey))
+            string appKey;
+            string sign;
+            if (!headers.Contains("AppKey"))
             {
-                return  new HttpResponseMessage(HttpStatusCode.Unauthorized) { Content=new StringContent("AppKey为空")};
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized) { Content = new StringContent("AppKey为空") };
             }
-            if (string.IsNullOrEmpty(appSecret))
+            else
             {
-                return new HttpResponseMessage(HttpStatusCode.Unauthorized) { Content = new StringContent("appSecret为空") };
+                appKey = headers.GetValues("AppKey").Single();
             }
-
+            if (!headers.Contains("Sign"))
+            {
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized) { Content = new StringContent("Sign为空") };
+            }
+            else
+            {
+                sign = headers.GetValues("Sign").Single();
+            }
+            
             var appInfo = await appInfoService.GetByAppKeyAsync(appKey);
             if (appInfo == null)
             {
@@ -50,7 +56,21 @@ namespace UserCenter.OpenAPI
             }
             else
             {
-                if (!appSecret.Equals(appInfo.AppSecret, StringComparison.OrdinalIgnoreCase))
+                var formData = await actionContext.Request.Content.ReadAsFormDataAsync();
+                var names = formData.AllKeys.OrderBy(k=>k).ToArray();
+                StringBuilder sbContent = new StringBuilder();
+                for(int i=0;i<names.Length;i++)
+                {
+                    string name = names[i];
+                    sbContent.Append(name).Append("=").Append(formData[name]);
+                    if(i<names.Length-1)
+                    {
+                        sbContent.Append("&");
+                    }
+                }
+                string signComputed = MD5Helper.ComputeMd5(sbContent+appInfo.AppSecret);
+
+                if (!signComputed.Equals(sign, StringComparison.OrdinalIgnoreCase))
                 {
                     return new HttpResponseMessage(HttpStatusCode.Unauthorized)
                                 { Content = new StringContent("AppKey、AppSecret验证错误") };

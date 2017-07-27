@@ -21,9 +21,9 @@ namespace UserCenter.OpenAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<UserGroupDTO[]> GetAll()
+        public async Task<UserGroupDTO[]> GetGroups(long userId)
         {
-            return await GroupService.GetAllAsync();
+            return await GroupService.GetGroupsAsync(userId);
         }
 
         [HttpGet]

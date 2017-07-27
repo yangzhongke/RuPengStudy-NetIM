@@ -10,7 +10,7 @@ namespace UserCenter.IServices
     public interface IUserGroupService : IServiceTag
     {
         Task<UserGroupDTO> GetByIdAsync(long id);
-        Task<UserGroupDTO[]> GetAllAsync();
+        Task<UserGroupDTO[]> GetGroupsAsync(long userId);
         Task<UserDTO[]> GetGroupUsersAsync(long userGroupId);
 
         Task AddUserToGroupAsync(long userGroupId, long userId);

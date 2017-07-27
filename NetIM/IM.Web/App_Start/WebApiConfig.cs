@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace UserCenter.OpenAPI
+namespace IM.Web
 {
     public static class WebApiConfig
     {
@@ -16,12 +16,9 @@ namespace UserCenter.OpenAPI
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                //routeTemplate: "api/{controller}/{id}",
-                routeTemplate: "api/{controller}/{action}/{id}",
+                routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
-           // config.Filters.Add(new AuthenticationFilter());
         }
     }
 }

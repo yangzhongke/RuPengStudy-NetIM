@@ -21,11 +21,17 @@ namespace UserCenter.Services
             return dto;
         }
 
-        public async Task<UserGroupDTO[]> GetAllAsync()
+        public async Task<UserGroupDTO[]> GetGroupsAsync(long userId)
         {
             using (UCDbContext ctx = new UCDbContext())
             {
-                var groups = await ctx.UserGroups.ToArrayAsync();
+                var user = await ctx.Users.SingleOrDefaultAsync(u=>u.Id==userId);
+                if(user==null)
+                {
+                    return null;
+                }
+
+                var groups = user.Groups;
                 List<UserGroupDTO> dtos = new List<UserGroupDTO>();
                 foreach(var group in groups)
                 {
