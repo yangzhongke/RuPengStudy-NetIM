@@ -16,7 +16,7 @@ namespace UserCenter.NetSDK
 
         public async Task<long> GetByIdAsync(long id)
         {
-            var result = await ExecutePostAsync("/UserGroup/GetById", new Dictionary<string, object> { { "id", id }});
+            var result = await ExecuteGetAsync("/UserGroup/GetById", new Dictionary<string, object> { { "id", id }});
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 throw new ApplicationException("验证错误");
@@ -30,7 +30,7 @@ namespace UserCenter.NetSDK
 
         public async Task<UserGroup[]> GetGroupsAsync(long userId)
         {
-            var result = await ExecutePostAsync("/UserGroup/GetGroups", new Dictionary<string, object> { { "userId", userId } });
+            var result = await ExecuteGetAsync("/UserGroup/GetGroups", new Dictionary<string, object> { { "userId", userId } });
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 throw new ApplicationException("验证错误");
@@ -44,7 +44,7 @@ namespace UserCenter.NetSDK
 
         public async Task<User[]> GetGroupUsersAsync(long userGroupId)
         {
-            var result = await ExecutePostAsync("/UserGroup/GetGroupUsers", new Dictionary<string, object> { { "userGroupId", userGroupId } });
+            var result = await ExecuteGetAsync("/UserGroup/GetGroupUsers", new Dictionary<string, object> { { "userGroupId", userGroupId } });
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 throw new ApplicationException("验证错误");
@@ -58,7 +58,7 @@ namespace UserCenter.NetSDK
 
         public async Task AddUserToGroupAsync(long userGroupId, long userId)
         {
-            var result = await ExecutePostAsync("/UserGroup/AddUserToGroup", 
+            var result = await ExecuteGetAsync("/UserGroup/AddUserToGroup", 
                     new Dictionary<string, object> { { "userGroupId", userGroupId }, { "userId", userId } });
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
@@ -72,7 +72,7 @@ namespace UserCenter.NetSDK
 
         public async Task RemoveUserFromGroupAsync(long userGroupId, long userId)
         {
-            var result = await ExecutePostAsync("/UserGroup/RemoveUserFromGroup",
+            var result = await ExecuteGetAsync("/UserGroup/RemoveUserFromGroup",
                     new Dictionary<string, object> { { "userGroupId", userGroupId }, { "userId", userId } });
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {

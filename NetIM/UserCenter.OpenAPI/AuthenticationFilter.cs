@@ -56,14 +56,13 @@ namespace UserCenter.OpenAPI
             }
             else
             {
-                var formData = await actionContext.Request.Content.ReadAsFormDataAsync();
-                var names = formData.AllKeys.OrderBy(k=>k).ToArray();
+                var queryString = actionContext.Request.GetQueryNameValuePairs().OrderBy(kv => kv.Key).ToArray();
                 StringBuilder sbContent = new StringBuilder();
-                for(int i=0;i<names.Length;i++)
+                for(int i=0;i<queryString.Length;i++)
                 {
-                    string name = names[i];
-                    sbContent.Append(name).Append("=").Append(formData[name]);
-                    if(i<names.Length-1)
+                    var kv = queryString[i];
+                    sbContent.Append(kv.Key).Append("=").Append(kv.Value);
+                    if(i< queryString.Length-1)
                     {
                         sbContent.Append("&");
                     }

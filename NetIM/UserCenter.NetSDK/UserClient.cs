@@ -15,7 +15,7 @@ namespace UserCenter.NetSDK
 
         public async Task<long> AddNewAsync(string phoneNum, string nickName, string password)
         {
-            var result = await ExecutePostAsync("/User/AddNew", new Dictionary<string, object> { { "phoneNum", phoneNum },
+            var result = await ExecuteGetAsync("/User/AddNew", new Dictionary<string, object> { { "phoneNum", phoneNum },
                     { "nickName", nickName }, { "password", password }});
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
@@ -29,7 +29,7 @@ namespace UserCenter.NetSDK
         }
         public async Task<bool> UserExistsAsync(string phoneNum)
         {
-            var result = await ExecutePostAsync("/User/UserExists", new Dictionary<string, object> { { "phoneNum", phoneNum } });
+            var result = await ExecuteGetAsync("/User/UserExists", new Dictionary<string, object> { { "phoneNum", phoneNum } });
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 throw new ApplicationException("验证错误");
@@ -43,7 +43,7 @@ namespace UserCenter.NetSDK
 
         public async Task<bool> CheckLoginAsync(string phoneNum, string password)
         {
-            var result = await ExecutePostAsync("/User/CheckLogin",
+            var result = await ExecuteGetAsync("/User/CheckLogin",
                 new Dictionary<string, object> { { "phoneNum", phoneNum }, { "password", password } });
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
@@ -58,7 +58,7 @@ namespace UserCenter.NetSDK
 
         public async Task<User> GetByIdAsync(long id)
         {
-            var result = await ExecutePostAsync("/User/GetById",
+            var result = await ExecuteGetAsync("/User/GetById",
                 new Dictionary<string, object> { { "id", id } });
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
@@ -73,7 +73,7 @@ namespace UserCenter.NetSDK
 
         public async Task<User> GetByPhoneNumAsync(string phoneNum)
         {
-            var result = await ExecutePostAsync("/User/GetByPhoneNum",
+            var result = await ExecuteGetAsync("/User/GetByPhoneNum",
                  new Dictionary<string, object> { { "phoneNum", phoneNum } });
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {

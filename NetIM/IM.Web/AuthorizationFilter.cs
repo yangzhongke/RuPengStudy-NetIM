@@ -13,7 +13,7 @@ namespace IM.Web
 {
     public class AuthorizationFilter : IAuthorizationFilter
     {
-        public bool AllowMultiple => throw new NotImplementedException();
+        public bool AllowMultiple { get { return true; } }
 
         public async Task<HttpResponseMessage> ExecuteAuthorizationFilterAsync(HttpActionContext actionContext, CancellationToken cancellationToken, Func<Task<HttpResponseMessage>> continuation)
         {

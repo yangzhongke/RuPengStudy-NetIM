@@ -21,7 +21,7 @@ namespace UserCenter.OpenAPI
                 defaults: new { id = RouteParameter.Optional }
             );
 
-           // config.Filters.Add(new AuthenticationFilter());
+           config.Filters.Add(new AuthenticationFilter());
         }
     }
 }
