@@ -1,6 +1,7 @@
 ﻿using JWT;
 using JWT.Algorithms;
 using JWT.Serializers;
+using NetIM.IMServer.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,14 +81,17 @@ namespace NetIM.IMServer
             }
         }
 
-        public static long? GetUserIdFromToken(string token)
+        public static LoginUserInfo GetUserInfoFromToken(string token)
         {
             try
             {
                 IDictionary<string, object> payload = Decode(token);
                 if (payload.ContainsKey("UserId"))
                 {
-                    return (long)payload["UserId"];
+                    LoginUserInfo userInfo = new LoginUserInfo();
+                    userInfo.UserId = (long)payload["UserId"];
+                    userInfo.UserNickName = (string)payload["UserNickName"];
+                    return userInfo;
                 }
                 else
                 {
@@ -104,10 +108,10 @@ namespace NetIM.IMServer
             }
         }
 
-        public static long? GetUserId(HttpContextBase ctx)
+        public static LoginUserInfo GetUserInfo(HttpContextBase ctx)
         {
             string token = GetToken(ctx);
-            return GetUserIdFromToken(token);
+            return GetUserInfoFromToken(token);
         }
     }
 }

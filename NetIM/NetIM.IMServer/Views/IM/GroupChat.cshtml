@@ -32,9 +32,16 @@
 
     var signalrDone = function () {
         chatHub.server.init();
+        chatHub.server.a().done(function (res) {
+            alert(res);
+        });
         $('#btnSend').click(function () {
             var msg = $('#txtMsg').val();
-            chatHub.server.sendMessage('group',@Model, msg);
+            chatHub.server.sendMessage(@Model, msg).done(function () {
+                alert("ok");
+            }).fail(function (a) {
+                alert("fail"+a);
+           });
             $('#txtMsg').val('').focus();
         });
     };
@@ -42,7 +49,7 @@
     $(function () {
         var msg = $("#txtMsg").val();
         chatHub = $.connection.chatHub;
-        chatHub.client.onReceiveMessage = function (msgType, fromId, targetId, message) {
+        chatHub.client.onReceiveMessage = function ( fromId, targetId, message) {
             // Add the message to the page.
             $('#listMsgs').append('<li><strong>' + htmlEncode(fromId)
                 + '</strong>: ' + htmlEncode(message) + '</li>');
