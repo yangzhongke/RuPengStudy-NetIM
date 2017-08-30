@@ -14,6 +14,7 @@ namespace UserCenter.Services
         public UCDbContext():base("connstr")
         {
             Database.SetInitializer<UCDbContext>(null);
+            //Database.CreateIfNotExists();
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

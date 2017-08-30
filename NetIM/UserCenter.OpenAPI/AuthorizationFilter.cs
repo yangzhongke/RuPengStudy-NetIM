@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using UserCenter.IServices;
@@ -16,19 +15,20 @@ namespace UserCenter.OpenAPI
     //不要System.Web.Mvc下的IAuthorizationFilter
     //而是用System.Web.Http.Filters下的
     //然后在WebApiConfig中配置：config.Filters.Add(new AuthenticationFilter());
-    public class AuthenticationFilter : IAuthorizationFilter
+    public class AuthorizationFilter : IAuthorizationFilter
     {
-        //public IAppInfoService AppInfoService { get; set; }
+        private IAppInfoService appInfoService { get; set; }
+
+        public AuthorizationFilter(IAppInfoService appInfoService)
+        {
+            this.appInfoService = appInfoService;
+        }
 
         public bool AllowMultiple { get { return true; } }
 
         public async Task<HttpResponseMessage> ExecuteAuthorizationFilterAsync(HttpActionContext actionContext, 
             CancellationToken cancellationToken, Func<Task<HttpResponseMessage>> continuation)
         {
-            //由于AuthenticationFilter是在WebApiConfig中直接new的，所以属性不会自动注入
-            IAppInfoService appInfoService = (IAppInfoService)GlobalConfiguration.Configuration
-                .DependencyResolver.GetService(typeof(IAppInfoService));
-
             var headers = actionContext.Request.Headers;
             string appKey;
             string sign;

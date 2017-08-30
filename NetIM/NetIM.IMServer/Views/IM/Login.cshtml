@@ -5,8 +5,8 @@
 }
 <div class="container">
 <form id="formLogin">
-    手机号：<input type="text" name="phoneNum" />
-    密码：<input type="password" name="password" />
+    手机号：<input type="text" name="phoneNum" value="18918918189" />
+    密码：<input type="password" name="password" value="123" />
     <input type="button" id="btnLogin" value="登录" />
 </form>
 </div>
@@ -18,7 +18,7 @@
             $.ajax({
                 type: "post", dataType: "json", url: "/IM/Login", data: formData,
                 success: function (res) {
-                    if (res.isok) {
+                    if (res.isOK) {
                         location.href = "/IM/Index";
                     }
                     else {

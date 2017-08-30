@@ -1,12 +1,24 @@
-﻿@model string
+﻿@model UserCenter.NetSDK.User
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = Model+"-聊天";
+    ViewBag.Title = Model.NickName+"-聊天";
 }
-
-<ul id="listGroups">
-    <li  v-for="group in getOrderedGroups" >{{group.name}}</li>
-</ul>
+<div class="weui-cells" id="listGroups">
+    <div class="weui-search-bar__box" v-if="groups.length>5">
+        <!--班级数量多于5个才显示搜索框-->
+        <i class="weui-icon-search"></i>
+        <input type="search" class="weui-search-bar__input" id="search_input" placeholder="搜索" v-model="searchName" />
+        <a href="javascript:" class="weui-icon-clear" id="search_clear" v-on:click="searchName=''"></a>
+    </div>
+    <a v-for="group in getOrderedGroups" v-on:click="groupClick(group)" style="display:none" v-show="true" class="weui-cell weui-cell_access" href="javascript:;">
+        <div class="weui-cell__bd">
+            <span style="vertical-align: middle">{{group.name}}</span>
+            <span class="weui-badge" v-if="group.unreadCount>0" style="margin-left: 5px;">{{group.unreadCount}}</span>
+        </div>
+        <div class="weui-cell__ft">
+        </div>
+    </a>
+</div>
 
 @section scripts {
 <script src="~/Scripts/jquery-1.6.4.min.js"></script>
@@ -22,21 +34,24 @@
             },
             methods:
             {
-                groupClick: function (group) {
-                    openGroupChat(group.id, group.name);
+                groupClick: function (group)
+                {
+                    window.open("GroupChat?groupId=" + group.id);
                 }
             },
             computed:
             {
-                getOrderedGroups() {
+                getOrderedGroups: function () {
                     //根据未读消息数量排序，这样有未读消息的显示到顶部
                     //filter则是在用户输入搜索条件的时候根据班级的名字搜索
                     var searchName = this.searchName;
-                    return this.groups.sort((g1, g2) => { return g2.unreadCount - g1.unreadCount; }).filter(function (item) {
-                        if (searchName) {
+                    return this.groups.sort(function(g1, g2) { return g2.unreadCount - g1.unreadCount; }).filter(function (item) {
+                        if (searchName)
+                        {
                             return item.name.indexOf(searchName) >= 0;
                         }
-                        else {
+                        else
+                        {
                             return true;
                         }
                     });
@@ -53,7 +68,7 @@
                 for (var i = 0; i < res.length; i++)
                 {
                     var item = res[i];
-                    groups.push({ name: item, unreadCount:3 });
+                    groups.push({id:item.id, name: item.name, unreadCount:3 });
                 }
                 vm.groups = groups;
             },

@@ -1,0 +1,58 @@
+﻿@model long
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "和"+ Model+"-聊天";
+}
+
+<ul id="listMsgs">
+</ul>
+<input type="text" id="txtMsg"/><input type="button" id="btnSend" value="发送"/>
+
+@section scripts {
+<script src="~/Scripts/jquery-1.6.4.min.js"></script>
+<script src="~/Scripts/jquery.cookie.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+<script src="~/signalr/hubs"></script>
+
+<script type="text/javascript">
+    function htmlEncode(value)
+    {
+        if (value)
+        {
+            return jQuery('<div />').text(value).html();
+        }
+        else
+        {
+            return '';
+        }
+    }
+
+    var chatHub;
+
+    var signalrDone = function () {
+        chatHub.server.init();
+        $('#btnSend').click(function () {
+            var msg = $('#txtMsg').val();
+            chatHub.server.sendMessage('group',@Model, msg);
+            $('#txtMsg').val('').focus();
+        });
+    };
+
+    $(function () {
+        var msg = $("#txtMsg").val();
+        chatHub = $.connection.chatHub;
+        chatHub.client.onReceiveMessage = function (msgType, fromId, targetId, message) {
+            // Add the message to the page.
+            $('#listMsgs').append('<li><strong>' + htmlEncode(fromId)
+                + '</strong>: ' + htmlEncode(message) + '</li>');
+        };
+
+        $('#txtMsg').focus();
+
+        var token = $.cookie("Token");
+        $.connection.hub.qs = { Token: token };
+        $.connection.hub.start().done(signalrDone);
+    });
+</script>
+}

@@ -20,8 +20,8 @@ namespace UserCenter.OpenAPI
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
-           config.Filters.Add(new AuthenticationFilter());
+            AuthorizationFilter authorFilter = (AuthorizationFilter)config.DependencyResolver.GetService(typeof(AuthorizationFilter));
+           config.Filters.Add(authorFilter);
         }
     }
 }
