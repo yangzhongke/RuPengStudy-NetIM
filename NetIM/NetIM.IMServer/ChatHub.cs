@@ -52,21 +52,7 @@ namespace NetIM.IMServer
                 hubResult.Message = "您未登录或者已经登录过期，请重新登录";
                 return hubResult;
             }
-            long[] groupUserIds = null;
-
-            //System.Runtime.Caching这个程序集中，因为不是asp.net，所以不能用asp.net的cache
-            //memcache性能再高也没有Web服务器的内存性能高
-            //而且组成员人员id数据量也没那么大，所以放到MemoryCache反而好
-            MemoryCache cache = MemoryCache.Default;
-            string GroupUserIdsKey = "GroupUserIds" + targetId;
-            groupUserIds = (long[])cache.Get(GroupUserIdsKey);//从缓存中获取，提升性能
-            if (groupUserIds == null)
-            {
-                var api = UserCenterAPIFactory.Create();
-                var groupUsers = await api.userGroup.GetGroupUsersAsync(targetId);
-                groupUserIds = groupUsers.Select(u => u.Id).ToArray();
-                cache.Set(GroupUserIdsKey, groupUserIds, DateTimeOffset.Now.AddMinutes(1));
-            }
+            long[] groupUserIds = await UserCenterHelper.GetGroupUserIdsAsync(targetId);
 
             if (!groupUserIds.Contains(loginUserInfo.UserId))
             {

@@ -26,18 +26,27 @@
 <script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
 <script src="~/signalr/hubs"></script>
-
-<script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
 <script type="text/javascript">
+    var chatHub;
+    function onMessage(msgName, options) {
+        //其他窗口发消息统一给这个窗口发"sendGroupMessage"
+        if (msgName == "sendGroupMessage") {
+            var groupId = options.groupId;
+            var msg = options.msg;
+            chatHub.server.sendMessage(groupId, msg).done(function () {
+                console.log("ok");
+            }).fail(function (a) {
+                alert("fail" + a);
+            });
+        }
+    }
     var groupChatWindows = new Array();
     setInterval(function () {
         //把关闭的窗口从groupChatWindows中删除
         var newWindows = new Array();
-        for (var i = 0; i < groupChatWindows.length; i++)
-        {
+        for (var i = 0; i < groupChatWindows.length; i++) {
             var win = groupChatWindows[i];
-            if (!win.closed)
-            {
+            if (!win.closed) {
                 newWindows.push(win);
             }
         }
@@ -57,7 +66,9 @@
         }
         return null;
     }
+</script>
 
+<script type="text/javascript">
     $(function () {
         var vm = new Vue({
             el: '#listGroups',
@@ -69,15 +80,26 @@
             {
                 groupClick: function (group)
                 {
-                    var winGroupChat = findWindowByGroupId(group.id);
+                    //点击后把未读消息设置为0
+                    var groupId = group.id;
+                    for (var i = 0; i < this.groups.length; i++)
+                    {
+                        var g = this.groups[i];
+                        if (g.id == groupId)
+                        {
+                            g.unreadCount = 0;
+                        }
+                    }
+                    //如果窗口已经打开，则激活窗口
+                    var winGroupChat = findWindowByGroupId(groupId);
                     if (winGroupChat)
                     {
                         winGroupChat.focus();
                     }
-                    else
+                    else//打开窗口
                     {
-                        winGroupChat = window.open("GroupChat?groupId=" + group.id);
-                        winGroupChat.groupId = group.id;
+                        winGroupChat = window.open("GroupChat?groupId=" + groupId);
+                        winGroupChat.groupId = groupId;
                         groupChatWindows.push(winGroupChat);
                     }
                 }
@@ -111,7 +133,7 @@
                 for (var i = 0; i < res.length; i++)
                 {
                     var item = res[i];
-                    groups.push({id:item.id, name: item.name, unreadCount:3 });
+                    groups.push({id:item.id, name: item.name, unreadCount:0 });
                 }
                 vm.groups = groups;
             },
@@ -120,46 +142,31 @@
                 alert("加载班级列表失败");
             }
         });
-    });
-</script>
-<script type="text/javascript">
-    var chatHub;
-    function onMessage(msgName, options)
-    {
-        if (msgName == "sendGroupMessage")
-        {
-            var groupId = options.groupId;
-            var msg = options.msg;
-            chatHub.server.sendMessage(groupId, msg).done(function () {
-                alert("ok");
-            }).fail(function (a) {
-                alert("fail"+a);
-            });
-        }
-    }
 
-    var signalrDone = function () {
-        chatHub.server.init();        
-    };
-
-    $(function () {
-        var msg = $("#txtMsg").val();
         chatHub = $.connection.chatHub;
-        chatHub.client.onReceiveMessage = function ( fromId, targetId, message) {
+        chatHub.client.onReceiveMessage = function (fromId, targetId, message) {
             var winGroupChat = findWindowByGroupId(targetId);
             if (winGroupChat)
             {
-                winGroupChat.onMessage("onReceiveMessage", { fromId: fromId, message: message});
+                //收到消息，通知子窗口显示消息
+                winGroupChat.onMessage("onReceiveMessage", { fromId: fromId, message: message });
             }
             else
             {
-                alert("有未读消息");
-            }            
+                //增加未读消息数量
+                for (var i = 0; i < vm.groups.length; i++)
+                {
+                    vm.groups[i].unreadCount++;
+                }
+            }
         };
-        
+
         var token = $.cookie("Token");
         $.connection.hub.qs = { Token: token };
-        $.connection.hub.start().done(signalrDone);
+        $.connection.hub.start().done(function () {
+            chatHub.server.init();
+        });
     });
 </script>
+
 }

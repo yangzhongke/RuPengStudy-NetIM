@@ -4,24 +4,70 @@
     var msgs = ViewBag.msgs as IEnumerable<NetIM.IMServer.Helpers.MessageHistory>;
     long groupId = ViewBag.groupId;
 }
-
-<ul id="listMsgs">
-    @foreach (var msg in msgs)
-    {
-        <li>
-            <strong>@msg.FromUserName<text>@msg.CreateDateTime</text></strong>:@msg.Message
-        </li>
+<script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
+<link href="~/Scripts/im/chat/style.css" rel="stylesheet" />
+<style>
+    .chatbox {
+        float: left;
+        width: 78%;
+        height: 450px;
+        overflow-y: auto;
+        overflow-x: auto;
     }
-</ul>
-<input type="text" id="txtMsg"/><input type="button" id="btnSend" value="发送"/>
+</style>
+<div id="app">
+    <div class="chatbox" id="chatbox">
+        <ul class="content-reply-box mg10" id="msgList" v-show="true">
+            <li v-for="item in chatItems" class="odd"><span class="user ui-link"><img class="img-responsive avatar_" src="/imgs/userdefault.gif"><span class="user-name">{{item.name}}</span></span><div class="reply-content-box"><span class="reply-time">{{item.date}}</span><div class="reply-content pr"><span class="arrow">&nbsp;</span><span class="chatMsgRecord" v-html="item.msg"></span></div></div></li>
+        </ul>
+    </div>
+</div>
+<div style="clear:both"></div>
+<input type="text" id="txtMsg" /><input type="button" id="btnSend" value="发送" />
 
 @section scripts {
 <script src="~/Scripts/jquery-1.6.4.min.js"></script>
+<script type="text/javascript">
+    var scrollToBottom = function () {
+        $("#chatbox").animate({ "scrollTop": $("#chatbox")[0].scrollHeight }, "slow");//滚到最底部   
+    };
+
+    var vm = new Vue({
+        el: '#app',
+        data: { chatItems: []},
+        methods: {
+            appendChatRecord: function ( name, date, msg)
+            {
+                this.chatItems.push({ name: name, date: date, msg: msg });
+            }
+        }
+    });
+    function loadHistoryMsgs() {
+        $.ajax({
+            url: "/IM/LoadHistoryMessages",
+            data: { groupId:@groupId },
+            type: "post", dataType: "json",
+            success: function (result) {
+                if (result.status !=0) {
+                    alert("加载历史消息出错" + result.msg);
+                    return;
+                }
+                for (var i = 0; i < result.data.length; i++) {
+                    var item = result.data[i];
+                    var createDT = new Date(item.createDateTime).toLocaleString();
+                    vm.appendChatRecord(item.fromUserName, createDT, item.message);
+                }
+                setTimeout(scrollToBottom, 500);
+            }
+        });
+    };
+</script>
 <script type="text/javascript">
     if (!window.opener)
     {
         alert("只能通过聊天窗口打开");
     }
+
     function htmlEncode(value) {
         if (value) {
             return jQuery('<div />').text(value).html();
@@ -34,10 +80,11 @@
     function onMessage(msgName, options) {
         if (msgName == "onReceiveMessage")
         {
+            var now = new Date().toLocaleString();
             var fromId = options.fromId;
             var message = options.message;
-            $('#listMsgs').append('<li><strong>' + htmlEncode(fromId)
-                + '</strong>: ' + htmlEncode(message) + '</li>');
+            vm.appendChatRecord("我", now, message);
+            setTimeout(scrollToBottom, 500);//因为vue加载是异步的，因此要稍等几秒再滚动 
         }
     }
     $(function () {
@@ -47,7 +94,9 @@
             window.opener.onMessage("sendGroupMessage", { groupId:@groupId,msg: msg});
             $('#txtMsg').val('').focus();
         });
+        loadHistoryMsgs();
     });
+
 </script>
 
 }

@@ -1,0 +1,689 @@
+
+
+/** content_left end */
+/** content_right start */
+.wrap .right_box {
+    width: 640px;
+    margin-top: 47px;
+    float: left;
+    position: relative;
+    margin-left: 35px;
+    background: none;
+}
+.right {
+    background: url("../images/bg_right.min.png") no-repeat top;
+    border-radius: 3px;
+    max-height: 709px;
+    min-height: 550px;
+}
+.dialog_box {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.dialog_box_header {
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+}
+.dialog_box .time_line {
+    color: #23B4F1;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: -2px;
+}
+.dialog_box .user {
+    margin-top: 18px;
+}
+.dialog_box .user .msg {
+    padding-bottom: 1px; /** 显示box-shadow */
+}
+.dialog_box .user .msg .msgBody {
+    line-height: 22px;
+    border: 1px solid #a1d6fa;
+    border-radius: 5px;
+    min-height: 20px;
+    box-shadow: 0px 1px 0px #cdcdcd;
+    text-align: left;
+}
+.dialog_box .user .msg .msgArrow {
+    margin-top: 10px;
+}
+.dialog_box .user .msg .msgArrow img {
+    width: 6px;
+}
+.dialog_box .user .status {
+    display: none;
+    margin: 0 10px;
+}
+.dialog_box .user .status_error {
+    display: block;
+    background: url("../images/icons.min.png") no-repeat;
+    background-position: 0 -41px;
+    width: 21px;
+    height: 21px;
+}
+.dialog_box .user_img img {
+    border: 1px solid #fff;
+    box-shadow: 0px 1px 0px #d7d7d7;
+}
+.dialog_box .other_user {
+    padding-left: 10px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+.dialog_box .other_user div {
+    float: left;
+}
+.dialog_box .other_user .msg {
+    margin-left: 10px;
+}
+.dialog_box .other_user .msg .msgBody {
+    float: none;
+    background-color: #fff!important;
+    color: #000;
+    max-width: 500px;
+    margin-left: 5px;
+    padding: 12px 19px 12px 10px;
+}
+.dialog_box .other_user .msg .voice{
+    width: 80px;
+    background: url("../images/voicefrom.png") no-repeat;
+    background-position: 80px 8px;
+}
+.dialog_box .self .msg .voice{
+    width: 80px;
+    background: url("../images/voiceto.png") no-repeat;
+    background-position: 0 8px;
+}
+.dialog_box .user .msg .msgBody {
+    margin-right: 2px;
+}
+.dialog_box .self .msg .msgBody {
+    margin-left: 40px;
+    margin-right: 4px;
+}
+.dialog_box .other_user div {
+    float: none;
+}
+.dialog_box .other_user .user_img {
+    float: left;
+}
+.dialog_box .other_user .msg {
+    margin-left: 30px;
+    padding-right: 30px;
+}
+.dialog_box .other_user .msg div {
+    float: left;
+}
+.dialog_box .other_user .msg .status {
+    float: right;
+    margin-left: 5px;
+}
+.dialog_box .self {
+    width: auto;
+}
+.dialog_box .self .user_img {
+    float: right;
+}
+.dialog_box .self .msg {
+    margin-right: 50px;
+    padding-left: 30px;
+    text-align: right
+}
+.dialog_box .self .msg div {
+    float: right;
+}
+.dialog_box .self .msg .status {
+    float: left;
+    margin-right: 5px;
+}
+.dialog_box .self {
+    text-align: right;
+    padding-right: 10px;
+    position: relative;
+    overflow: hidden;
+    float: right;
+}
+.dialog_box .self div {
+    float: none;
+}
+.dialog_box .self .msg .msgBody {
+    background-color: #30b5ee;
+    margin-right: 4px;
+    max-width: 300px;
+    float: none;
+    padding: 12px 10px 12px 19px;
+}
+.dialog_box .self .msg .msgArrow {
+    margin-right: -1px;
+}
+
+/** 输入框 */
+.msg_box {
+    background-color: #b3e5f8;
+    height: 130px;
+    border-radius: 3px;
+}
+.msg_box .features {
+    padding-left: 15px;
+    padding-bottom: 6px;
+    position: relative;
+    overflow: hidden;
+    padding-top: 13px;
+}
+.msg_box .features span {
+    float: left;
+    display: block;
+}
+.msg_box .features span>a {
+    background: url("../images/icons.min.png") no-repeat;
+    display: block;
+}
+.msg_box .features .expression a {
+    background-position: -88px 0;
+    width: 28px;
+    height: 27px;
+}
+.msg_box .features .img {
+    margin-left: 14px;
+}
+.msg_box .features .img a {
+    background-position: -117px 0;
+    width: 28px;
+    height: 27px;
+}
+.msg_box .features .record {
+    float: right;
+    height: 17px;
+    margin-top: 10px;
+    margin-right: 115px;
+}
+.msg_box .features .record a {
+    background: none;
+    height: 17px;
+    vertical-align: top;
+    color: #4b90ae;
+}
+.msg_box .features .record font {
+    background: url("../images/icons.min.png") no-repeat;
+    background-position: -149px -5px;
+    width: 14px;
+    height: 17px;
+    display: inline-block;
+    margin-right: 6px;
+}
+.msg_box .input_box {
+    padding-left: 14px;
+    padding-right: 15px;
+    margin-bottom: 13px;
+    position: relative;
+    overflow: hidden;
+}
+.msg_box .input_box .text_box {
+    width: 510px;
+    float: left;
+}
+.msg_box .input_box .text_box .textarea {
+    background-color: #fff;
+    color: #000;
+    overflow: hidden;
+    resize: none;
+    border: 1px solid #E7E6E6;
+    border-radius: 5px;
+    padding: 8px;
+    height: 50px;
+    width: 494px;
+    line-height: 20px;
+}
+.textarea span{height: 20px;}
+.textarea span img{height: 20px;}
+.msg_box .input_box .button_box {
+    margin-left: 20px;
+    float: right;
+    text-align: center;
+    width: 80px;
+}
+.msg_box .input_box .button_box span {
+    display: block;
+    margin-top: 6px;
+    text-align: center;
+}
+.msg_box .input_box .button_box button {
+    width: 80px;
+    background-color: #2992d9;
+    border-radius: 5px;
+    border: none;
+    height: 34px;
+    color: #fff;
+    font-size: 18px;
+}
+.msg_box .input_box .button_box font {
+    color: #4b90ae;
+    font-size: 13px;
+}
+.pagetion_list {
+    border-top: 2px solid #d4f3fe;
+    height: 30px;
+    padding-top: 10px;
+    text-align: center;
+}
+.pagetion_list span {
+    display: inline-block;
+    color: #4b90ae;
+    font-size: 13px;
+}
+.page_num {
+    margin-right: 10px;
+}
+.page_num input {
+    border: 1px solid #4b90ae;
+    font-size: 13px;
+    height: 13px;
+    padding: 2px 5px;
+    width: 35px;
+    text-align: center;
+    margin-right: 10px;
+}
+.first_page a {
+    background: url("../images/icons.min.png") no-repeat;
+    display: block;
+    width: 9px;
+    height: 9px;
+    margin-right: 10px;
+    background-position: 0px -77px;
+}
+.first_page a:hover {
+    background: url("../images/icons.min.png") no-repeat;
+    background-position: -51px -77px;
+}
+.prev_page a {
+    background: url("../images/icons.min.png") no-repeat;
+    display: block;
+    width: 9px;
+    height: 9px;
+    background-position: -12px -77px;
+    margin-right: 10px;
+}
+.prev_page a:hover {
+    background: url("../images/icons.min.png") no-repeat;
+    background-position: -63px -77px;
+}
+.next_page a {
+    background: url("../images/icons.min.png") no-repeat;
+    display: block;
+    width: 9px;
+    height: 9px;
+    background-position: -27px -77px;
+    margin-right: 13px;
+}
+.next_page a:hover {
+    background: url("../images/icons.min.png") no-repeat;
+    background-position: -77px -77px;
+}
+.last_page a {
+    background: url("../images/icons.min.png") no-repeat;
+    display: block;
+    width: 9px;
+    height: 9px;
+    background-position: -38px -77px;
+}
+.last_page a:hover {
+    background: url("../images/icons.min.png") no-repeat;
+    background-position: -88px -77px;
+}
+.footer {
+    text-align: center;
+    color: #176173;
+    margin-top: 10px;
+}
+.btnBack{display: none;}
+/** * 登录注册 */
+.login-header {
+}
+.login-wrap {
+    width: 664px;
+    margin: 0 auto;
+    margin-top: 30px;
+    position: relative;
+    overflow: hidden;
+    background-color: #73c9e3;
+    border-radius: 2px;
+}
+.login-logo {
+    text-align: center;
+    margin-top: 30px;
+}
+.login-logo img {
+    width: 312px;
+    height: 66px;
+}
+.login-title {
+    margin-top: 35px;
+    font-size: 28px;
+    text-align: center;
+    font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micor Hei";
+}
+.login-content {
+    margin: 0 auto;
+    margin-top: 35px;
+    padding-left: 170px;
+    line-height: 25px;
+}
+.login-content span {
+    display: block;
+}
+.login-content input {
+    width: 280px;
+    height: 14px;
+    font-size: 14px;
+    padding: 12px 10px;
+    border: none;
+    border-radius: 2px;
+}
+.login-content .error {
+    padding-left: 10px;
+    font-size: 12px;
+    color: #D81D21;
+}
+.login-content .name {
+    margin-top: 20px;
+}
+.login-content .pass {
+    margin-top: 20px;
+}
+.login-content .btn {
+    margin-top: 40px;
+}
+.login-content .btn button {
+    background-color: #2dbe60;
+    border-radius: 1px;
+    width: 300px;
+    padding: 8px 0;
+    text-align: center;
+    border: none;
+    color: #fff;
+    font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micor Hei";
+    font-size: 18px;
+    cursor: pointer;
+}
+.login-foot {
+    text-align: center;
+    padding-top: 30px;
+}
+.login-foot a {
+    color: #1871b6;
+}
+.login-foot {
+    background: url("../images/bg_foot.min.png") no-repeat;
+    height: 110px;
+    margin-left: -20px;
+}
+.login-footer {
+    text-align: center;
+    color: #176173;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+.phone-login-logo {
+    display: none;
+}
+.RongIMexpressionWrap{display: none;height: 150px;
+    background-color: #fff;
+    overflow-y: scroll;}
+.RongIMexpressionWrap span{width: 40px;height: 40px; margin-left: 15px; margin-top: 10px; display: inline-block;}
+.slice{
+    clear: both;
+}
+.light_notice_backlayer{top: 0px; left: 0px; width: 100%; height: 100%; position: absolute;
+    opacity: 0.15;
+    z-index: 60000;
+    background-color: rgb(0, 0, 0);
+}
+.frontlayer{position: absolute;
+    z-index: 60001;
+    -webkit-user-select: none;}
+@media screen and (max-width:960px) {
+    /* 会话列表 */
+    .container {
+        background: none;
+        background-color: #22aed8;
+        overflow-y: hidden;
+    }
+    .wrap {
+        width: 100%;
+    }
+    .wrap .header{
+        background-color: #22aed8;
+    }
+    .wrap .left {
+        width: 100%;
+        height: 100%;
+        background: none;
+        border-radius: 0;
+        margin-top: 0px;
+        max-height: none;
+        min-height: inherit;
+    }
+    .wrap .right {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        margin-top: 0px;
+        max-height: none;
+        min-height: inherit;
+    }
+    .list {
+        background-color: #fff;
+    }
+    .dialog_header {
+        display: none;
+    }
+    .settingView {
+        display: none;
+    }
+    .listOperatorContent {
+        display: none;
+    }
+    .phone_dialog_header {
+        display: block;
+        /*position: fixed;*/
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        background-color: #22aed8;
+        z-index: 1000;
+        height: 40px;
+        padding: 10px 20px;
+        font-size: 18px;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    .phone_dialog_header span {
+        width: 23px;
+        height: 20px;
+    }
+    .phone_dialog_header span a {
+        display: block;
+        height: 20px;
+    }
+    .phone_dialog_header .logOut {
+        display: none;
+        float: left;
+    }
+    .phone_dialog_header .logOut a {
+        width: 23px;
+        background: url('../images/icons_phone.png') no-repeat;
+        background-size: 100px 100px;
+    }
+    .phone_dialog_header .addrBtnBack {
+        float: left;
+    }
+    .phone_dialog_header .addrBtnBack a {
+        width: 60px;
+        font-size: 15px;
+    }
+    .phone_dialog_header .addrBtn {
+        float: right;
+    }
+    .phone_dialog_header .addrBtn a {
+        width: 23px;
+        background: url('../images/icons_phone.png') no-repeat;
+        background-size: 100px 100px;
+        background-position: -28px 0;
+    }
+    .listConversation ul li font.user_name {
+        font-size: 14px;
+        font-weight: bold;
+        color: #313f44;
+        height: 20px;
+        float: left;
+    }
+    .conversationInfo>p{
+        margin-top: 10px;
+    }
+    .listConversation ul li span.conversationInfo {
+    }
+    .listAddr .nameInitials {
+        background-color: #f8f8f8;
+        height: 25px;
+        line-height: 25px;
+    }
+    .wrap .right_box {
+        float: none;
+        width: 100%;
+        margin: 0 auto;
+        margin-top: 0px;
+    }
+    .right {
+        background: none;
+        background-color: #e5e5e5;
+    }
+    .right .dialog_box_header {
+        display: block;
+        /*position: fixed;*/
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        background-color: #22aed8;
+        line-height: 40px;
+        z-index: 1000;
+        height: 40px;
+        font-size: 18px;
+        box-sizing: border-box;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .right .dialog_box {
+    }
+    .right .msg_box {
+        /*position: fixed;*/
+        bottom: 0px;
+        left: 0px;
+        background-color: #fff;
+        border-top: 1px #DBDBDB solid;
+        box-sizing: border-box;
+        height: auto;
+    }
+    .right .dialog_box_header{
+        width: 100%;
+        box-sizing: border-box;
+        padding-right: 80px;
+        overflow: hidden;
+    }
+    .right .dialog_box_header a{
+        text-align: left;
+        width: 80px;
+        float: left;
+        font-size: 15px;
+        padding-left: 10px;
+    }
+    .right .pagetion_list {
+        display: none;
+    }
+    .right .msg_box {
+        width: 100%;
+        padding-top: 8px;
+        box-sizing: border-box;
+        z-index: 1100;
+    }
+    .msg_box .features {
+        float: left;
+        height: 25px;
+        padding-left: 15px;
+        padding-bottom: 6px;
+        position: relative;
+        overflow: hidden;
+        padding-top: 0px;
+    }
+    .msg_box .input_box {
+        float: none;
+        margin-left: 10px;
+        margin-bottom: 8px;
+    }
+    .msg_box .features span {
+        display: none;
+    }
+    .msg_box .features .expression {
+        display: block;
+    }
+    .msg_box .features .expression a {
+        background: url('../images/icons_phone.png') no-repeat;
+        background-size: 100px 100px;
+        background-position: -61px 0;
+        width: 28px;
+        height: 50px;
+    }
+    .msg_box .input_box{
+        position: relative;
+    }
+    .msg_box .input_box .button_box span {
+        margin-top: 0px;
+    }
+    .msg_box .input_box .text_box {
+        margin-right: 60px;
+        width: 100%;
+        height: 35px;
+        padding-right: 110px;
+        margin-top: -34px;
+        box-sizing: border-box;
+    }
+    .msg_box .input_box .text_box .textarea {
+        height: 20px;
+        max-height: 50px;
+        line-height: 20px;
+        width: 100%;
+        padding: 6px;
+        color: #000;
+    }
+    .textarea span{height: 20px;}
+    .msg_box .input_box .button_box {
+        float: right;
+        margin-right: 0px;
+        position: relative;
+        z-index: 3;
+    }
+    .msg_box .input_box .button_box font {
+        display: none;
+    }
+    .msg_box .input_box .button_box button {
+        display: block;
+    }
+    .RongIMexpressionWrap {
+        display: none;
+        width: 100%;
+        height: 160px;
+        background-color: #fff;
+        overflow-y: scroll;
+    }
+    .RongIMexpressionWrap span{width: 40px; height: 40px; margin-left: 10px; margin-top: 10px; display: inline-block;}
+    .footer {
+        display: none;
+    }
+    .slice {
+        clear: both;
+    }
+    .btnBack{display: inherit;}
+}
