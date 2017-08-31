@@ -218,7 +218,6 @@
     <Content Include="Scripts\im\images\voicefrom.png" />
     <Content Include="Scripts\im\images\voiceto.png" />
     <Content Include="Scripts\im\images\white_arrow.png" />
-    <Content Include="Scripts\im\js\jquery.nicescroll.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
