@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetIM.IMServer.Helpers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,25 +46,31 @@ namespace NetIM.IMServer.Controllers
         public async Task<ActionResult> Index()
         {
             var api = UserCenterAPIFactory.Create();
-            long? userId = JWTHelper.GetUserId(this.HttpContext);
-            var user = await api.user.GetByIdAsync(userId.Value);
+            var userInfo = JWTHelper.GetUserInfo(this.HttpContext);            
+            var user = await api.user.GetByIdAsync(userInfo.UserId);
             return View(user);
         }
 
         [HttpPost]
         public async Task<ActionResult> LoadGroups()
         {
-            
-            long? userId = JWTHelper.GetUserId(this.HttpContext);
+            var userInfo = JWTHelper.GetUserInfo(this.HttpContext);
+            if(userInfo==null)
+            {
+                return Content("未登录");
+            }
             var api = UserCenterAPIFactory.Create();
-            var groups = await api.userGroup.GetGroupsAsync(userId.Value);
+            var groups = await api.userGroup.GetGroupsAsync(userInfo.UserId);
             return Json(groups);
         }
 
         [HttpGet]
         public ActionResult GroupChat(long groupId)
         {
-            return View((object)groupId);
+            var msgs = MessageHistoryHelper.GetClassHistoryMsgs(groupId, 50);
+            ViewBag.msgs = msgs;
+            ViewBag.groupId = groupId;
+            return View();
         }
     }
 }

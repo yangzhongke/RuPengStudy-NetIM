@@ -1,10 +1,17 @@
-﻿@model long
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "和"+ Model+"-聊天";
+    ViewBag.Title = "聊天";
+    var msgs = ViewBag.msgs as IEnumerable<NetIM.IMServer.Helpers.MessageHistory>;
+    long groupId = ViewBag.groupId;
 }
 
 <ul id="listMsgs">
+    @foreach (var msg in msgs)
+    {
+        <li>
+            <strong>@msg.FromUserName<text>@msg.CreateDateTime</text></strong>:@msg.Message
+        </li>
+    }
 </ul>
 <input type="text" id="txtMsg"/><input type="button" id="btnSend" value="发送"/>
 
@@ -32,12 +39,9 @@
 
     var signalrDone = function () {
         chatHub.server.init();
-        chatHub.server.a().done(function (res) {
-            alert(res);
-        });
         $('#btnSend').click(function () {
             var msg = $('#txtMsg').val();
-            chatHub.server.sendMessage(@Model, msg).done(function () {
+            chatHub.server.sendMessage(@groupId, msg).done(function () {
                 alert("ok");
             }).fail(function (a) {
                 alert("fail"+a);
