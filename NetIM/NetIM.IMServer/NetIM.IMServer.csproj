@@ -230,6 +230,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\IMController.cs" />
+    <Compile Include="ExceptionHubPipelineModule.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

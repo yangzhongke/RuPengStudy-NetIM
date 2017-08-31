@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -16,6 +17,8 @@ namespace NetIM.IMServer
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             GlobalFilters.Filters.Add(new JsonNetActionFilter());
             GlobalFilters.Filters.Add(new UserSessionFilter());
+
+            GlobalHost.HubPipeline.AddModule(new ExceptionHubPipelineModule());
         }
     }
 }
