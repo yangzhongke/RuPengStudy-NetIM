@@ -180,7 +180,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="1.html" />
     <Content Include="Global.asax" />
     <Content Include="imgs\loading-large.gif" />
     <Content Include="imgs\offlineuser.png" />
