@@ -14,8 +14,6 @@ namespace NetIM.IMServer
         //不要使用WebClient的异步，都换用HttpClient
         public async Task<HubResult> Init()
         {
-            string s = null;
-            s.ToString();
             HubResult hubResult = new HubResult();
             var token = this.Context.QueryString["Token"];
             var loginUserInfo = JWTHelper.GetUserInfoFromToken(token);
