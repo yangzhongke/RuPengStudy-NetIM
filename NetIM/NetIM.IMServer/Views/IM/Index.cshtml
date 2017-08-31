@@ -22,10 +22,43 @@
 
 @section scripts {
 <script src="~/Scripts/jquery-1.6.4.min.js"></script>
+<script src="~/Scripts/jquery.cookie.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+<script src="~/signalr/hubs"></script>
+
 <script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
 <script type="text/javascript">
-    $(function () {
+    var groupChatWindows = new Array();
+    setInterval(function () {
+        //把关闭的窗口从groupChatWindows中删除
+        var newWindows = new Array();
+        for (var i = 0; i < groupChatWindows.length; i++)
+        {
+            var win = groupChatWindows[i];
+            if (!win.closed)
+            {
+                newWindows.push(win);
+            }
+        }
+        groupChatWindows = newWindows;
+    }, 1000);
 
+    //查找Id=groupId的打开的窗口
+    function findWindowByGroupId(groupId)
+    {
+        for (var i = 0; i < groupChatWindows.length; i++)
+        {
+            var win = groupChatWindows[i];
+            if (!win.closed && win.groupId == groupId)
+            {
+                return win;
+            }
+        }
+        return null;
+    }
+
+    $(function () {
         var vm = new Vue({
             el: '#listGroups',
             data: {
@@ -36,7 +69,17 @@
             {
                 groupClick: function (group)
                 {
-                    window.open("GroupChat?groupId=" + group.id);
+                    var winGroupChat = findWindowByGroupId(group.id);
+                    if (winGroupChat)
+                    {
+                        winGroupChat.focus();
+                    }
+                    else
+                    {
+                        winGroupChat = window.open("GroupChat?groupId=" + group.id);
+                        winGroupChat.groupId = group.id;
+                        groupChatWindows.push(winGroupChat);
+                    }
                 }
             },
             computed:
@@ -77,6 +120,46 @@
                 alert("加载班级列表失败");
             }
         });
+    });
+</script>
+<script type="text/javascript">
+    var chatHub;
+    function onMessage(msgName, options)
+    {
+        if (msgName == "sendGroupMessage")
+        {
+            var groupId = options.groupId;
+            var msg = options.msg;
+            chatHub.server.sendMessage(groupId, msg).done(function () {
+                alert("ok");
+            }).fail(function (a) {
+                alert("fail"+a);
+            });
+        }
+    }
+
+    var signalrDone = function () {
+        chatHub.server.init();        
+    };
+
+    $(function () {
+        var msg = $("#txtMsg").val();
+        chatHub = $.connection.chatHub;
+        chatHub.client.onReceiveMessage = function ( fromId, targetId, message) {
+            var winGroupChat = findWindowByGroupId(targetId);
+            if (winGroupChat)
+            {
+                winGroupChat.onMessage("onReceiveMessage", { fromId: fromId, message: message});
+            }
+            else
+            {
+                alert("有未读消息");
+            }            
+        };
+        
+        var token = $.cookie("Token");
+        $.connection.hub.qs = { Token: token };
+        $.connection.hub.start().done(signalrDone);
     });
 </script>
 }
